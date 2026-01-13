@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Sales Analysis Dashboard</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        .gradient-bg {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        }
+        .card-hover {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        .metric-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        }
+        .chart-container {
+            position: relative;
+            height: 300px;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+    <!-- Header -->
+    <header class="gradient-bg text-white shadow-lg">
+        <div class="container mx-auto px-4 py-6">
+            <div class="flex items-center justify-between">
+                <div class="flex items-center space-x-4">
+                    <i class="fas fa-chart-line text-3xl"></i>
+                    <div>
+                        <h1 class="text-2xl font-bold">E-Commerce Sales Analysis</h1>
+                        <p class="text-sm opacity-90">Business Intelligence Dashboard</p>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm">
+                        <i class="fas fa-database mr-2"></i>5,000 Orders
+                    </span>
+                    <span class="bg-white/20 px-3 py-1 rounded-full text-sm">
+                        <i class="fas fa-calendar mr-2"></i>2023-2025
+                    </span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container mx-auto px-4 py-8">
+        <!-- Key Metrics -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-tachometer-alt mr-2 text-purple-600"></i>Key Business Metrics
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="metric-card rounded-lg p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Total Revenue</p>
+                            <p class="text-2xl font-bold text-gray-800">$533.7M</p>
+                            <p class="text-xs text-green-600 mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>Strong Performance
+                            </p>
+                        </div>
+                        <div class="text-3xl text-green-500">
+                            <i class="fas fa-dollar-sign"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card rounded-lg p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Total Profit</p>
+                            <p class="text-2xl font-bold text-gray-800">$79.7M</p>
+                            <p class="text-xs text-green-600 mt-1">
+                                <i class="fas fa-arrow-up mr-1"></i>14.92% Margin
+                            </p>
+                        </div>
+                        <div class="text-3xl text-blue-500">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card rounded-lg p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Average Order Value</p>
+                            <p class="text-2xl font-bold text-gray-800">$106,733</p>
+                            <p class="text-xs text-purple-600 mt-1">
+                                <i class="fas fa-shopping-cart mr-1"></i>High Value Orders
+                            </p>
+                        </div>
+                        <div class="text-3xl text-purple-500">
+                            <i class="fas fa-receipt"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="metric-card rounded-lg p-6 card-hover">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm text-gray-600 mb-1">Unique Customers</p>
+                            <p class="text-2xl font-bold text-gray-800">4,844</p>
+                            <p class="text-xs text-orange-600 mt-1">
+                                <i class="fas fa-users mr-1"></i>96.9% Repeat Rate
+                            </p>
+                        </div>
+                        <div class="text-3xl text-orange-500">
+                            <i class="fas fa-user-friends"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Charts Section -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-chart-bar mr-2 text-purple-600"></i>Visual Analytics
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <!-- Sales by Category Chart -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Sales by Category</h3>
+                    <div class="chart-container">
+                        <canvas id="categorySalesChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Profit by Category Chart -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Profit by Category</h3>
+                    <div class="chart-container">
+                        <canvas id="categoryProfitChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Monthly Sales Trend -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Monthly Sales Trend</h3>
+                    <div class="chart-container">
+                        <canvas id="monthlyTrendChart"></canvas>
+                    </div>
+                </div>
+
+                <!-- Payment Methods -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">Payment Methods Distribution</h3>
+                    <div class="chart-container">
+                        <canvas id="paymentChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Top Performers -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-trophy mr-2 text-purple-600"></i>Top Performers
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                <!-- Top Categories -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-medal text-yellow-500 mr-2"></i>Top Categories by Revenue
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">Home Decor</span>
+                            <span class="text-green-600 font-bold">$57.2M</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">Furniture</span>
+                            <span class="text-green-600 font-bold">$56.6M</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">Clothing</span>
+                            <span class="text-green-600 font-bold">$55.1M</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Top Regions -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-globe text-blue-500 mr-2"></i>Top Regions by Revenue
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">North</span>
+                            <span class="text-green-600 font-bold">$143.6M</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">East</span>
+                            <span class="text-green-600 font-bold">$135.8M</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">West</span>
+                            <span class="text-green-600 font-bold">$131.0M</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Customer Segments -->
+                <div class="bg-white rounded-lg shadow-lg p-6 card-hover">
+                    <h3 class="text-lg font-semibold mb-4 text-gray-700">
+                        <i class="fas fa-users text-purple-500 mr-2"></i>Customer Insights
+                    </h3>
+                    <div class="space-y-3">
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">Total Orders</span>
+                            <span class="text-blue-600 font-bold">5,000</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">Unique Products</span>
+                            <span class="text-blue-600 font-bold">3,835</span>
+                        </div>
+                        <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                            <span class="font-medium">Avg Order Value</span>
+                            <span class="text-blue-600 font-bold">$106,733</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Insights -->
+        <section class="mb-8">
+            <h2 class="text-2xl font-bold mb-6 text-gray-800">
+                <i class="fas fa-lightbulb mr-2 text-purple-600"></i>Key Business Insights
+            </h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-6 border-l-4 border-green-500">
+                    <h3 class="text-lg font-semibold mb-3 text-gray-700">
+                        <i class="fas fa-chart-line text-green-500 mr-2"></i>Revenue Performance
+                    </h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                            <span>Strong overall revenue of $533.7M with healthy profit margins</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                            <span>Consistent performance across all major categories</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-check-circle text-green-500 mr-2 mt-1"></i>
+                            <span>Balanced geographic distribution across regions</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="bg-gradient-to-r from-purple-50 to-pink-50 rounded-lg p-6 border-l-4 border-purple-500">
+                    <h3 class="text-lg font-semibold mb-3 text-gray-700">
+                        <i class="fas fa-bullseye text-purple-500 mr-2"></i>Growth Opportunities
+                    </h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-up text-purple-500 mr-2 mt-1"></i>
+                            <span>Home Decor and Furniture show highest potential</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-up text-purple-500 mr-2 mt-1"></i>
+                            <span>North region leads with $143.6M in revenue</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-arrow-up text-purple-500 mr-2 mt-1"></i>
+                            <span>High customer retention indicates satisfaction</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Action Buttons -->
+        <section class="mb-8">
+            <div class="bg-white rounded-lg shadow-lg p-6">
+                <h3 class="text-lg font-semibold mb-4 text-gray-700">
+                    <i class="fas fa-tools mr-2 text-purple-600"></i>Analysis Tools
+                </h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <button onclick="window.open('visualizations/sales_by_category.png', '_blank')" 
+                            class="bg-blue-500 hover:bg-blue-600 text-white px-4 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-image mr-2"></i>View Sales Chart
+                    </button>
+                    <button onclick="window.open('visualizations/profit_by_category.png', '_blank')" 
+                            class="bg-green-500 hover:bg-green-600 text-white px-4 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-chart-pie mr-2"></i>View Profit Chart
+                    </button>
+                    <button onclick="window.open('data/processed/ecommerce_processed.csv', '_blank')" 
+                            class="bg-purple-500 hover:bg-purple-600 text-white px-4 py-3 rounded-lg transition-colors">
+                        <i class="fas fa-download mr-2"></i>Download Data
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-12">
+        <div class="container mx-auto px-4 text-center">
+            <p class="mb-2">
+                <i class="fas fa-chart-line mr-2"></i>E-Commerce Sales Analysis Dashboard
+            </p>
+            <p class="text-sm text-gray-400">
+                Powered by Python Analytics | Dataset: 5,000 Orders (2023-2025)
+            </p>
+        </div>
+    </footer>
+
+    <script>
+        // Chart.js Configuration
+        Chart.defaults.font.family = 'system-ui, -apple-system, sans-serif';
+
+        // Sales by Category Chart
+        const categorySalesCtx = document.getElementById('categorySalesChart').getContext('2d');
+        new Chart(categorySalesCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Home Decor', 'Furniture', 'Clothing', 'Books', 'Kitchen', 'Electronics', 'Toys', 'Sports', 'Beauty', 'Groceries'],
+                datasets: [{
+                    label: 'Sales ($M)',
+                    data: [57.2, 56.6, 55.1, 54.9, 54.2, 52.6, 52.2, 52.1, 50.8, 47.9],
+                    backgroundColor: 'rgba(99, 102, 241, 0.8)',
+                    borderColor: 'rgba(99, 102, 241, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Profit by Category Chart
+        const categoryProfitCtx = document.getElementById('categoryProfitChart').getContext('2d');
+        new Chart(categoryProfitCtx, {
+            type: 'bar',
+            data: {
+                labels: ['Furniture', 'Electronics', 'Clothing', 'Home Decor', 'Books', 'Kitchen', 'Toys', 'Sports', 'Groceries', 'Beauty'],
+                datasets: [{
+                    label: 'Profit ($M)',
+                    data: [8.7, 8.0, 8.4, 8.6, 8.1, 7.9, 8.0, 7.7, 7.1, 7.2],
+                    backgroundColor: 'rgba(34, 197, 94, 0.8)',
+                    borderColor: 'rgba(34, 197, 94, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Monthly Sales Trend
+        const monthlyTrendCtx = document.getElementById('monthlyTrendChart').getContext('2d');
+        new Chart(monthlyTrendCtx, {
+            type: 'line',
+            data: {
+                labels: ['Oct-23', 'Nov-23', 'Dec-23', 'Jan-24', 'Feb-24', 'Mar-24', 'Apr-24', 'May-24', 'Jun-24', 'Jul-24', 'Aug-24', 'Sep-24'],
+                datasets: [{
+                    label: 'Monthly Sales ($M)',
+                    data: [24.7, 21.4, 24.8, 21.5, 19.9, 22.6, 21.7, 24.7, 21.4, 24.0, 23.3, 23.6],
+                    borderColor: 'rgba(251, 146, 60, 1)',
+                    backgroundColor: 'rgba(251, 146, 60, 0.1)',
+                    tension: 0.4,
+                    fill: true
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: false,
+                        ticks: {
+                            callback: function(value) {
+                                return '$' + value + 'M';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+
+        // Payment Methods Chart
+        const paymentCtx = document.getElementById('paymentChart').getContext('2d');
+        new Chart(paymentCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Net Banking', 'COD', 'Debit Card', 'Credit Card', 'UPI'],
+                datasets: [{
+                    data: [20.2, 20.1, 20.1, 19.9, 19.8],
+                    backgroundColor: [
+                        'rgba(99, 102, 241, 0.8)',
+                        'rgba(34, 197, 94, 0.8)',
+                        'rgba(251, 146, 60, 0.8)',
+                        'rgba(239, 68, 68, 0.8)',
+                        'rgba(168, 85, 247, 0.8)'
+                    ],
+                    borderWidth: 2,
+                    borderColor: '#fff'
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+</html>
