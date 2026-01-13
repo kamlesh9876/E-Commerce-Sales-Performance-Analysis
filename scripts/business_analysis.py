@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 """
 E-Commerce Sales Business Analysis
-Data Analyst focused script for KPI calculation, trend analysis, and business insights.
 """
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 from datetime import datetime
 import warnings
 
@@ -34,7 +31,6 @@ def calculate_revenue_kpis(df):
     print(f"\n💰 Revenue Performance Analysis")
     print("-" * 35)
     
-    # Overall KPIs
     total_revenue = df['Sales'].sum()
     total_profit = df['Profit'].sum()
     total_orders = len(df)
@@ -48,14 +44,12 @@ def calculate_revenue_kpis(df):
     print(f"  Average Order Value: ${avg_order_value:,.2f}")
     print(f"  Profit Margin: {profit_margin:.2f}%")
     
-    # Monthly trends
     monthly_revenue = df.groupby(df['Order Date'].dt.to_period('M')).agg({
         'Sales': 'sum',
         'Profit': 'sum',
         'Order ID': 'count'
     }).rename(columns={'Order ID': 'Order_Count'})
     
-    # Calculate growth rates
     monthly_revenue['Revenue_Growth_%'] = monthly_revenue['Sales'].pct_change() * 100
     monthly_revenue['Profit_Growth_%'] = monthly_revenue['Profit'].pct_change() * 100
     
@@ -71,7 +65,6 @@ def analyze_category_performance(df):
     print(f"\n📦 Category Performance Analysis")
     print("-" * 35)
     
-    # Category performance
     category_perf = df.groupby('Category').agg({
         'Sales': 'sum',
         'Profit': 'sum',
@@ -87,7 +80,6 @@ def analyze_category_performance(df):
     for i, (category, row) in enumerate(category_perf.tail(3).iterrows(), 1):
         print(f"  {category}: ${row['Sales']:,.2f} ({row['Profit_Margin_%']:.1f}% margin)")
     
-    # Sub-category analysis
     subcat_perf = df.groupby('Sub-Category').agg({
         'Sales': 'sum',
         'Profit': 'sum',
@@ -107,25 +99,18 @@ def analyze_customer_behavior(df):
     print("-" * 30)
     
     try:
-        # Customer statistics - simplified approach
         customer_stats = df.groupby('Customer Name').agg({
             'Sales': ['sum', 'mean'],
             'Order ID': 'count',
             'Order Date': ['min', 'max']
         }).round(2)
         
-        # Flatten column names
         customer_stats.columns = ['Total_Sales', 'Avg_Order_Value', 'Order_Count', 'First_Order', 'Last_Order']
-        
-        # Calculate customer lifetime
         customer_stats['Customer_Lifetime_Days'] = (customer_stats['Last_Order'] - customer_stats['First_Order']).dt.days
-        
-        # Customer segmentation
         customer_stats['Segment'] = pd.cut(customer_stats['Total_Sales'],
                                            bins=[0, 1000, 5000, 20000, float('inf')],
                                            labels=['Bronze', 'Silver', 'Gold', 'Platinum'])
         
-        # Segment summary
         segment_summary = customer_stats.groupby('Segment').agg({
             'Total_Sales': 'sum',
             'Order_Count': 'sum',
@@ -136,7 +121,6 @@ def analyze_customer_behavior(df):
         for segment, row in segment_summary.iterrows():
             print(f"  {segment}: {row['Customer_Count']} customers, ${row['Total_Sales']:,.2f} revenue")
         
-        # Key customer metrics
         print(f"\n📊 Customer Insights:")
         print(f"  Total Unique Customers: {len(customer_stats):,}")
         print(f"  Average Orders per Customer: {customer_stats['Order_Count'].mean():.1f}")
@@ -147,7 +131,6 @@ def analyze_customer_behavior(df):
         
     except Exception as e:
         print(f"❌ Error in customer analysis: {e}")
-        # Return basic customer metrics
         print(f"\n📊 Basic Customer Insights:")
         print(f"  Total Unique Customers: {df['Customer Name'].nunique():,}")
         print(f"  Average Orders per Customer: {len(df) / df['Customer Name'].nunique():.1f}")
@@ -160,7 +143,6 @@ def analyze_geographic_performance(df):
     print(f"\n🌍 Geographic Performance Analysis")
     print("-" * 38)
     
-    # Regional performance
     region_perf = df.groupby('Region').agg({
         'Sales': 'sum',
         'Profit': 'sum',
@@ -172,7 +154,6 @@ def analyze_geographic_performance(df):
     for region, row in region_perf.iterrows():
         print(f"  {region}: ${row['Sales']:,.2f} ({row['Unique_Customers']} customers)")
     
-    # Top cities
     city_perf = df.groupby('City').agg({
         'Sales': 'sum',
         'Profit': 'sum',
@@ -191,7 +172,6 @@ def analyze_profitability(df):
     print(f"\n💸 Profitability Analysis")
     print("-" * 28)
     
-    # Overall profitability
     total_revenue = df['Sales'].sum()
     total_profit = df['Profit'].sum()
     overall_margin = (total_profit / total_revenue) * 100
@@ -201,7 +181,6 @@ def analyze_profitability(df):
     print(f"  Total Profit: ${total_profit:,.2f}")
     print(f"  Profit Margin: {overall_margin:.2f}%")
     
-    # Discount impact analysis
     discount_impact = df.groupby(pd.cut(df['Discount'], bins=[0, 5, 10, 15, 20, 25, 30], 
                                      labels=['0-5%', '6-10%', '11-15%', '16-20%', '21-25%', '26-30%'])).agg({
         'Sales': 'sum',
@@ -214,7 +193,6 @@ def analyze_profitability(df):
     for discount_range, row in discount_impact.iterrows():
         print(f"  {discount_range}: {row['Profit_Margin_%']:.1f}% margin, {row['Order_Count']} orders")
     
-    # Product profitability
     product_profit = df.groupby('Product Name').agg({
         'Sales': 'sum',
         'Profit': 'sum',
@@ -237,7 +215,6 @@ def generate_business_recommendations(df):
     
     recommendations = []
     
-    # Revenue trend analysis
     monthly_trend = df.groupby(df['Order Date'].dt.to_period('M'))['Sales'].sum()
     if len(monthly_trend) > 1:
         if monthly_trend.iloc[-1] > monthly_trend.iloc[-2]:
@@ -245,26 +222,22 @@ def generate_business_recommendations(df):
         else:
             recommendations.append("⚠️ Revenue declined last month - investigate causes and implement recovery strategies")
     
-    # Category performance
     category_perf = df.groupby('Category')['Profit_Margin_%'].mean().sort_values(ascending=False)
     best_category = category_perf.index[0]
     worst_category = category_perf.index[-1]
     recommendations.append(f"🏆 {best_category} has highest profit margins ({category_perf.iloc[0]:.1f}%) - consider expanding this category")
     recommendations.append(f"📉 {worst_category} has lowest profit margins ({category_perf.iloc[-1]:.1f}%) - review pricing and costs")
     
-    # Geographic analysis
     region_perf = df.groupby('Region')['Sales'].sum().sort_values(ascending=False)
     top_region = region_perf.index[0]
     recommendations.append(f"🌍 {top_region} generates most revenue (${region_perf.iloc[0]:,.0f}) - strengthen presence in this region")
     
-    # Customer analysis
     avg_orders_per_customer = df.groupby('Customer Name')['Order ID'].count().mean()
     if avg_orders_per_customer < 2:
         recommendations.append("👥 Low repeat purchase rate - implement customer retention programs")
     else:
         recommendations.append("👥 Good customer retention - maintain current loyalty programs")
     
-    # Display recommendations
     for i, rec in enumerate(recommendations, 1):
         print(f"  {i}. {rec}")
     
@@ -276,7 +249,6 @@ def create_executive_summary(df):
     print(f"\n📋 Executive Summary")
     print("-" * 22)
     
-    # Calculate key metrics
     total_revenue = df['Sales'].sum()
     total_profit = df['Profit'].sum()
     total_orders = len(df)
@@ -303,16 +275,12 @@ def save_analysis_results(monthly_revenue, category_perf, customer_stats, recomm
     import os
     os.makedirs('reports', exist_ok=True)
     
-    # Save monthly revenue
     monthly_revenue.to_csv('reports/monthly_revenue_analysis.csv')
-    
-    # Save category performance
     category_perf.to_csv('reports/category_performance.csv')
     
-    # Save customer segments
-    customer_stats.groupby('Segment').size().to_csv('reports/customer_segments.csv')
+    if customer_stats is not None:
+        customer_stats.groupby('Segment').size().to_csv('reports/customer_segments.csv')
     
-    # Save recommendations
     recommendations_df = pd.DataFrame({'Recommendation': recommendations})
     recommendations_df.to_csv('reports/business_recommendations.csv', index=False)
     
@@ -326,33 +294,18 @@ def main():
     """Main business analysis pipeline"""
     
     try:
-        # Load cleaned data
         df = load_cleaned_data()
         if df is None:
             return
         
-        # Revenue analysis
         monthly_revenue = calculate_revenue_kpis(df)
-        
-        # Category analysis
         category_perf, subcat_perf = analyze_category_performance(df)
-        
-        # Customer analysis
         customer_stats, segment_summary = analyze_customer_behavior(df)
-        
-        # Geographic analysis
         region_perf, city_perf = analyze_geographic_performance(df)
-        
-        # Profitability analysis
         discount_impact, product_profit = analyze_profitability(df)
-        
-        # Generate recommendations
         recommendations = generate_business_recommendations(df)
-        
-        # Executive summary
         create_executive_summary(df)
         
-        # Save results (only if customer analysis succeeded)
         if customer_stats is not None:
             save_analysis_results(monthly_revenue, category_perf, customer_stats, recommendations)
         else:

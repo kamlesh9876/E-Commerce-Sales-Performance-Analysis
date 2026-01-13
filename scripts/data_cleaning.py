@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 """
 E-Commerce Sales Data Cleaning & Preparation
-Data Analyst focused script for data validation, cleaning, and feature engineering.
 """
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 from datetime import datetime
 import warnings
 
@@ -19,7 +16,6 @@ def load_and_assess_data():
     print("📊 E-Commerce Data Cleaning & Preparation")
     print("=" * 50)
     
-    # Load dataset
     df = pd.read_csv('data/raw/Ecommerce_Sales_Data_2024_2025.csv')
     
     print(f"📋 Dataset Overview:")
@@ -27,8 +23,6 @@ def load_and_assess_data():
     print(f"  Date Range: {df['Order Date'].min()} to {df['Order Date'].max()}")
     print(f"  Memory Usage: {df.memory_usage(deep=True).sum() / 1024**2:.2f} MB")
     
-    # Data quality assessment
-    print(f"\n🔍 Data Quality Assessment:")
     missing_data = df.isnull().sum()
     if missing_data.sum() > 0:
         print("Missing Values:")
@@ -46,17 +40,14 @@ def optimize_data_types(df):
     
     print(f"\n🔧 Optimizing Data Types...")
     
-    # Convert date column
     df['Order Date'] = pd.to_datetime(df['Order Date'])
     
-    # Optimize numeric types
     df['Quantity'] = pd.to_numeric(df['Quantity'], downcast='integer')
     df['Unit Price'] = pd.to_numeric(df['Unit Price'], downcast='integer')
     df['Discount'] = pd.to_numeric(df['Discount'], downcast='integer')
     df['Sales'] = pd.to_numeric(df['Sales'], downcast='float')
     df['Profit'] = pd.to_numeric(df['Profit'], downcast='float')
     
-    # Convert categorical columns
     categorical_cols = ['Region', 'City', 'Category', 'Sub-Category', 'Payment Mode']
     for col in categorical_cols:
         df[col] = df[col].astype('category')
@@ -71,18 +62,15 @@ def create_business_features(df):
     
     print(f"\n🔧 Creating Business Features...")
     
-    # Time-based features for trend analysis
     df['Year'] = df['Order Date'].dt.year
     df['Month'] = df['Order Date'].dt.month
     df['Quarter'] = df['Order Date'].dt.quarter
     df['DayOfWeek'] = df['Order Date'].dt.dayofweek
     df['MonthName'] = df['Order Date'].dt.month_name()
     
-    # Business metrics
     df['Profit_Margin_%'] = (df['Profit'] / df['Sales'] * 100).round(2)
     df['Effective_Price'] = df['Unit Price'] * (1 - df['Discount']/100)
     
-    # Order value categorization
     df['Order_Value_Category'] = pd.cut(
         df['Sales'],
         bins=[0, 50000, 100000, 200000, float('inf')],
@@ -98,12 +86,10 @@ def validate_business_logic(df):
     
     print(f"\n🔍 Business Logic Validation:")
     
-    # Validate sales calculation
     calculated_sales = df['Quantity'] * df['Unit Price'] * (1 - df['Discount']/100)
     sales_match = np.isclose(df['Sales'], calculated_sales, rtol=0.01)
     print(f"✅ Sales calculation validation: {sales_match.sum()}/{len(df)} records match")
     
-    # Check for invalid values
     negative_sales = (df['Sales'] <= 0).sum()
     negative_quantity = (df['Quantity'] <= 0).sum()
     negative_prices = (df['Unit Price'] <= 0).sum()
@@ -150,15 +136,12 @@ def save_cleaned_data(df):
     
     print(f"\n💾 Saving Cleaned Data...")
     
-    # Create directories if they don't exist
     import os
     os.makedirs('data/processed', exist_ok=True)
     
-    # Save cleaned data
     output_path = 'data/processed/ecommerce_cleaned.csv'
     df.to_csv(output_path, index=False)
     
-    # Create summary statistics
     summary_stats = {
         'total_records': len(df),
         'total_revenue': df['Sales'].sum(),
@@ -184,22 +167,11 @@ def main():
     """Main data cleaning pipeline"""
     
     try:
-        # Load and assess data
         df = load_and_assess_data()
-        
-        # Optimize data types
         df = optimize_data_types(df)
-        
-        # Create business features
         df = create_business_features(df)
-        
-        # Validate business logic
         df = validate_business_logic(df)
-        
-        # Generate quality report
         generate_quality_report(df)
-        
-        # Save cleaned data
         save_cleaned_data(df)
         
         print(f"\n🎉 Data cleaning completed successfully!")
