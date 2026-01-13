@@ -1,239 +1,225 @@
-# 📊 E-Commerce Sales Performance Analysis
+# 📊 E-Commerce Sales Performance Analysis - Data Analyst Portfolio
 
-## 📌 Project Overview
+## 🎯 **Project Overview**
+This is a **Data Analyst focused** e-commerce sales analysis project that demonstrates end-to-end business intelligence capabilities. The project showcases core data analyst skills: data cleaning, SQL-style aggregations, KPI calculation, trend analysis, and business insights communication.
 
-This project is an end-to-end e-commerce sales analytics and business intelligence system that transforms raw transactional data into actionable insights. It simulates a real-world analytics workflow used by data analysts to evaluate revenue performance, product profitability, customer behavior, and regional trends.
+## 🎓 **Data Analyst Skills Demonstrated**
+- ✅ **Data Cleaning & Validation**: Systematic data quality assessment
+- ✅ **SQL-Style Analysis**: Complex aggregations and window functions
+- ✅ **KPI Calculation**: Revenue, profit, margin, and growth metrics
+- ✅ **Trend Analysis**: Monthly, seasonal, and year-over-year patterns
+- ✅ **Customer Segmentation**: RFM analysis and lifetime value
+- ✅ **Business Intelligence**: Actionable insights and recommendations
+- ✅ **Power BI Preparation**: Clean data model and DAX measures
 
-The system combines Python-based data processing, analytical visualizations, and a lightweight interactive web dashboard to support data-driven business decisions.
-
-## 🎯 Objectives
-
-- Analyze sales performance and revenue trends over time
-- Identify top and underperforming products and categories
-- Understand customer purchasing behavior and value segments
-- Evaluate regional performance across cities and regions
-- Assess pricing, discounts, and profitability impact
-- Present insights through professional charts and a web dashboard
-
-## 🛠️ Tech Stack
-
-### Data & Analytics
-- **Python 3.11+**
-- **Pandas** – data cleaning, transformation, aggregation
-- **NumPy** – numerical computations
-- **Matplotlib / Seaborn** – static visualizations
-
-### Dashboard & Web
-- **HTML5**
-- **Tailwind CSS**
-- **JavaScript**
-- **Chart.js** – interactive charts
-- **Python HTTP Server** – local dashboard hosting
-
-### Data Source
-- **Kaggle E-Commerce Sales Dataset** (prince7489/e-commerce-sales)
-
-## 📁 Project Structure
+## 📁 **Project Structure (Data Analyst Optimized)**
 ```
 E_commerce_Sale/
+├── 📄 README.md                    # Business-focused documentation
+├── 📄 run_analysis.py              # Simple analysis runner
+├── 📄 requirements.txt             # Python dependencies
 │
-├── README.md
-├── requirements.txt
-├── run_analysis.py          # Menu-driven analysis runner
-├── run_dashboard.py         # Dashboard server launcher
-├── dashboard.html           # Interactive dashboard
+├── 📁 scripts/                     # Core analysis scripts
+│   ├── 📄 data_cleaning.py         # Data validation & feature engineering
+│   ├── 📄 business_analysis.py    # KPIs & business insights
+│   └── 📄 download_dataset.py      # Data acquisition
 │
-├── data/
-│   ├── raw/
-│   │   └── Ecommerce_Sales_Data_2024_2025.csv
-│   ├── processed/
-│   │   ├── ecommerce_processed.csv
-│   │   └── data_summary.csv
-│   └── data_dictionary.md
+├── 📁 sql/                        # SQL equivalents for all analyses
+│   ├── 📄 revenue_kpis.sql        # Revenue KPIs & trends
+│   ├── 📄 customer_analysis.sql   # Customer segmentation & CLV
+│   └── 📄 product_performance.sql  # Product profitability analysis
 │
-├── scripts/
-│   ├── 01_data_exploration.py
-│   ├── 02_business_analysis.py
-│   └── download_dataset.py
+├── 📁 powerbi/                    # Power BI implementation guide
+│   └── 📄 README.md               # Complete dashboard instructions
 │
-├── visualizations/
-│   ├── sales_by_category.png
-│   ├── profit_by_category.png
-│   ├── monthly_sales_trend.png
-│   └── payment_methods.png
+├── 📁 data/                       # Data management
+│   ├── 📁 raw/                   # Original dataset
+│   └── 📁 processed/             # Cleaned analysis data
 │
-└── reports/
+└── 📁 reports/                    # Generated business reports
 ```
 
-## 📊 Dataset Information
-
-### **Dataset Overview**
-- **Source**: Kaggle E-Commerce Sales Dataset (`prince7489/e-commerce-sales`)
-- **File**: `Ecommerce_Sales_Data_2024_2025.csv`
-- **Size**: 5,000 orders, 14 core columns
+## 📊 **Dataset Information**
+- **Source**: Kaggle E-Commerce Sales Dataset
+- **Size**: 5,000 orders, 14 core columns, 22 engineered features
 - **Time Period**: October 2023 – October 2025 (2 years)
-- **Geography**: 4 regions (North, South, East, West) across 25+ Indian cities
-- **Products**: 3,835 unique products across 10 major categories
-- **Customers**: 4,844 unique customers with purchase history
+- **Geography**: 4 regions across 25+ Indian cities
+- **Products**: 3,835 unique products across 10 categories
+- **Customers**: 4,844 unique customers
 
-### **Core Data Schema**
-| Column | Type | Description | Example |
-|--------|------|-------------|---------|
-| Order ID | Integer | Unique order identifier | 10001 |
-| Order Date | Date | Transaction date | 2024-10-19 |
-| Customer Name | String | Customer identifier | Kashvi Varty |
-| Region | String | Geographic region | South |
-| City | String | Specific city | Bangalore |
-| Category | String | Product category | Books |
-| Sub-Category | String | Product sub-category | Non-Fiction |
-| Product Name | String | Specific product | Non-Fiction Ipsum |
-| Quantity | Integer | Number of units ordered | 2 |
-| Unit Price | Integer | Price per unit | 36294 |
-| Discount | Integer | Discount percentage (0-30%) | 5 |
-| Sales | Float | Total sale amount | 68958.6 |
-| Profit | Float | Profit amount | 10525.09 |
-| Payment Mode | String | Payment method | Debit Card |
+## 🔄 **Analysis Pipeline**
 
-### **Engineered Features**
-- **Year, Month, Quarter, DayOfWeek**: Time-based analysis features
-- **MonthName**: Human-readable month names
-- **Profit_Margin_%**: Calculated profit margin percentage
-- **Effective_Price**: Price after discount application
-- **Order_Value_Category**: Order size classification (Small/Medium/Large)
-
-### **Data Quality Metrics**
-- **Completeness**: 100% (no missing values)
-- **Accuracy**: Validated ranges and formats
-- **Consistency**: Standardized categories and regions
-- **Timeliness**: Recent data through October 2025
-
-### **Dataset Summary**
-- **Total Orders**: 5,000
-- **Time Period**: Oct 2023 – Oct 2025
-- **Regions**: North, South, East, West
-- **Cities**: 25+ Indian cities including Bangalore, Delhi, Mumbai, Kolkata, Pune, etc.
-- **Products**: 3,800+ unique products
-- **Customers**: 4,800+ unique customers
-- **Categories**: 10 major categories (Books, Kitchen, Furniture, Home Decor, Clothing, Sports, Toys, Electronics, Groceries, Beauty)
-- **Payment Methods**: 5 types (Net Banking, COD, Debit Card, Credit Card, UPI)
-
-## 🔄 Data Pipeline
-```
-Raw CSV (Kaggle) → Data Cleaning & Validation → Feature Engineering → Business KPI Analysis → Visualizations (PNG) → Interactive Web Dashboard
-```
-
-## 📋 Business Questions Answered
-
-### 💰 Revenue Performance
-- Are sales increasing or declining over time?
-- What are the seasonal and monthly trends?
-- What is the average order value?
-
-### 📦 Product Performance
-- Which products and categories generate the most revenue?
-- Which products are underperforming?
-- Which categories have the highest profit margins?
-
-### 👥 Customer Behavior
-- Who are the most valuable customers?
-- How frequently do customers purchase?
-- How can customer retention be improved?
-
-### 🌍 Geographic Analysis
-- Which regions and cities perform best?
-- Where should marketing efforts be focused?
-
-### 💸 Pricing & Profitability
-- How do discounts impact profit?
-- Which products are most profitable?
-- What is the overall profit margin?
-
-## 📈 Key Metrics & Insights
-
-### **Business Performance**
-- **Total Revenue**: $533.7M
-- **Total Profit**: $79.7M
-- **Overall Profit Margin**: 14.92%
-- **Average Order Value**: $106,733
-
-### **Top Performers**
-- **Top Region**: North ($143.6M revenue)
-- **Top Categories**: Home Decor ($57.2M), Furniture ($56.6M), Clothing ($55.1M)
-- **Top Cities**: Bangalore, Lucknow, Guwahati, Chandigarh
-
-### **Customer Insights**
-- **Unique Customers**: 4,844
-- **Customer Retention**: High repeat purchase rate
-- **Payment Distribution**: Balanced across all 5 payment methods (~20% each)
-
-## 📊 Visual Outputs
-
-### **Generated Charts**
-- **Revenue by Category**: Bar chart showing sales distribution
-- **Profit by Category**: Bar chart showing profit margins
-- **Monthly Sales Trend**: 24-month trend line analysis
-- **Payment Method Distribution**: Pie chart of payment preferences
-
-All charts are stored in the `visualizations/` directory as high-quality PNG files.
-
-## 🌐 Interactive Dashboard
-
-The project includes a responsive web dashboard that displays:
-
-- **Key KPIs**: Revenue, Profit, Average Order Value, Customer Count
-- **Interactive Charts**: Chart.js powered visualizations
-- **Top Performers**: Categories and regions ranking
-- **Business Insights**: Strategic recommendations
-- **Download Links**: Access to processed data and charts
-
-## 🚀 How to Run the Project
-
-### 1️⃣ Install Dependencies
+### **Step 1: Data Cleaning & Preparation**
 ```bash
-pip install -r requirements.txt
+python scripts/data_cleaning.py
 ```
+- Data quality assessment (100% completeness)
+- Business logic validation
+- Feature engineering (time-based, business metrics)
+- Memory optimization (2.75MB → 0.89MB)
 
-### 2️⃣ Run Complete Analysis
+### **Step 2: Business Analysis & KPIs**
+```bash
+python scripts/business_analysis.py
+```
+- Revenue performance analysis
+- Category and product performance
+- Customer segmentation (Bronze/Silver/Gold/Platinum)
+- Geographic performance insights
+- Profitability and discount impact
+
+### **Step 3: Complete Pipeline**
 ```bash
 python run_analysis.py
 ```
-Select Option 1 to execute the full pipeline.
+Runs both phases automatically and generates all outputs.
 
-### 3️⃣ Launch Dashboard
-```bash
-python run_dashboard.py
+## 📈 **Key Business Metrics & Insights**
+
+### **💰 Financial Performance**
+- **Total Revenue**: $533,666,024.35
+- **Total Profit**: $79,708,734.91
+- **Profit Margin**: 14.94%
+- **Average Order Value**: $106,733.20
+
+### **🏆 Top Performers**
+- **Categories**: Home Decor ($57.2M), Furniture ($56.6M), Clothing ($55.1M)
+- **Region**: North ($143.6M revenue)
+- **Cities**: Bangalore, Lucknow, Guwahati leading
+
+### **👥 Customer Insights**
+- **Unique Customers**: 4,844
+- **Average Orders/Customer**: 1.0 (opportunity for retention)
+- **Customer Value**: $110,170.53 average
+
+### **🎯 Business Recommendations**
+1. **Revenue Recovery**: Investigate declining monthly trend
+2. **Category Expansion**: Focus on Electronics (15.4% margins)
+3. **Pricing Review**: Optimize Beauty category (14.4% margins)
+4. **Geographic Focus**: Strengthen North region presence
+5. **Customer Retention**: Implement loyalty programs
+
+## 🗃️ **SQL Analysis Files**
+
+### **revenue_kpis.sql**
+- Overall KPI calculations
+- Monthly revenue trends with growth rates
+- Category performance rankings
+- Geographic distribution analysis
+- Payment method breakdown
+
+### **customer_analysis.sql**
+- Customer lifetime value (CLV) analysis
+- RFM segmentation (Bronze/Silver/Gold/Platinum)
+- Purchase frequency patterns
+- Geographic customer distribution
+- High-value customer identification
+
+### **product_performance.sql**
+- Product profitability ranking
+- Category and sub-category analysis
+- Discount impact on margins
+- Seasonal product performance
+- Product affinity analysis
+
+## 📊 **Power BI Integration**
+
+### **Data Model Structure**
+- **Fact Tables**: Sales transactions
+- **Dimension Tables**: Customers, Products, Geography, Calendar
+- **Relationships**: Star schema design
+
+### **Key DAX Measures**
+```dax
+Total Revenue = SUM(Sales[Sales])
+Profit Margin % = DIVIDE([Total Profit], [Total Revenue]) * 100
+Customer Segment = SWITCH(TRUE(), 
+    [Total Revenue] < 1000, "Bronze",
+    [Total Revenue] < 5000, "Silver",
+    [Total Revenue] < 20000, "Gold",
+    "Platinum"
+)
 ```
-Open browser at: http://localhost:8000/dashboard.html
 
-## 💼 Business Value
+### **Dashboard Pages**
+1. **Executive Overview**: KPIs and trends
+2. **Product Analysis**: Category and product performance
+3. **Customer Insights**: Segmentation and behavior
+4. **Geographic Analysis**: Regional and city performance
 
-- Enables data-driven pricing and inventory decisions
-- Identifies high-value customers and profitable products
-- Supports strategic planning through trend analysis
-- Demonstrates real-world analytics and BI workflows
+## 🚀 **How to Use**
 
-## ⚠️ Limitations
+### **Quick Start**
+```bash
+# Install dependencies
+pip install -r requirements.txt
 
-- Dataset is static and historical
-- No real-time data ingestion
-- No authentication or role-based access
-- SQL logic is simulated using Pandas aggregations
+# Run complete analysis
+python run_analysis.py
 
-## 🎯 Future Enhancements
+# View results
+ls data/processed/ reports/ sql/
+```
 
-- SQL database integration (PostgreSQL/MySQL)
-- Time-series forecasting capabilities
-- Power BI / Tableau dashboard integration
-- Automated report generation
-- Real-time data ingestion pipeline
+### **Power BI Setup**
+1. Load `data/processed/ecommerce_cleaned.csv` into Power BI
+2. Use SQL queries for complex measures
+3. Follow `powerbi/README.md` for dashboard creation
 
-## 📌 Conclusion
+## 💼 **Business Value & Impact**
 
-This project demonstrates a complete analytics lifecycle, from raw data ingestion to executive-ready insights. It reflects real-world data analyst responsibilities and showcases strong skills in Python, data analysis, visualization, and business intelligence.
+### **Decision Support**
+- **Revenue Optimization**: Focus on high-performing categories
+- **Customer Retention**: Strategies to increase repeat purchases
+- **Geographic Expansion**: Target high-performing regions
+- **Product Strategy**: Promote profitable items, review underperformers
+
+### **Operational Efficiency**
+- **Data-Driven Planning**: Replace assumptions with insights
+- **Cost Optimization**: Identify discount impact on profitability
+- **Inventory Planning**: Seasonal and geographic demand patterns
+
+## 📋 **What This Project Demonstrates**
+
+### **✅ Data Analyst Core Competencies**
+- End-to-end data processing workflow
+- SQL and Python analytical skills
+- Business KPI calculation and interpretation
+- Data visualization and storytelling
+- Clear communication of insights
+
+### **✅ Technical Skills**
+- **Python**: Pandas, NumPy, data manipulation
+- **SQL**: Complex queries, window functions, aggregations
+- **Power BI**: Data modeling, DAX measures, dashboard design
+- **Data Validation**: Quality assessment and business logic verification
+
+### **✅ Business Acumen**
+- Revenue and profitability analysis
+- Customer segmentation and lifetime value
+- Geographic and product performance insights
+- Actionable recommendation generation
+
+## ⚠️ **Limitations & Assumptions**
+- Static historical dataset (no real-time data)
+- Synthetic e-commerce data for demonstration
+- Analysis limited to 2-year period
+- Customer retention based on order frequency only
+
+## 🎯 **Future Enhancements**
+- **Time Series Forecasting**: Predictive revenue modeling
+- **Advanced Segmentation**: Machine learning customer clustering
+- **Real-time Dashboard**: Live data integration
+- **A/B Testing**: Discount and pricing impact analysis
+
+## 📌 **Conclusion**
+
+This project demonstrates a complete **Data Analyst workflow** from raw data to actionable business insights. It showcases the ability to transform complex datasets into clear, actionable intelligence that drives business decisions.
+
+**Perfect for Data Analyst portfolio and interview preparation!**
 
 ---
 
-**Project Status**: ✅ Complete and Ready for Production Use
+**Repository**: https://github.com/kamlesh9876/E-Commerce-Sales-Performance-Analysis  
+**Status**: ✅ Complete and Ready for Power BI Dashboard  
 **Last Updated**: January 2026
-**Dataset**: 5,000 orders (2023-2025)
-**Dashboard**: Interactive web interface available
