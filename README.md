@@ -147,6 +147,20 @@ Customer Segment = SWITCH(TRUE(),
 3. **Customer Insights**: Segmentation and behavior
 4. **Geographic Analysis**: Regional and city performance
 
+## 🌐 **Live Demo**
+
+**🚀 View the Interactive Dashboard**: https://kamlesh9876.github.io/E-Commerce-Sales-Performance-Analysis/dashboard.html
+
+### **Dashboard Features**
+- ✅ Real-time business KPIs and metrics
+- ✅ Interactive charts and visualizations
+- ✅ Customer segmentation insights
+- ✅ Geographic performance analysis
+- ✅ Mobile-responsive design
+- ✅ Downloadable reports
+
+**Perfect for showcasing data analysis skills to recruiters and employers!**
+
 ## 🚀 **How to Use**
 
 ### **Quick Start**
@@ -221,5 +235,6 @@ This project demonstrates a complete **Data Analyst workflow** from raw data to 
 ---
 
 **Repository**: https://github.com/kamlesh9876/E-Commerce-Sales-Performance-Analysis  
-**Status**: ✅ Complete and Ready for Power BI Dashboard  
+**🌐 Live Dashboard**: https://kamlesh9876.github.io/E-Commerce-Sales-Performance-Analysis/dashboard.html  
+**Status**: ✅ Complete and Deployed - Live on GitHub Pages  
 **Last Updated**: January 2026
