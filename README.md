@@ -1,7 +1,9 @@
-# 📊 E-Commerce Sales Performance Analysis - Data Analyst Portfolio
+# 📊 E-Commerce Sales Performance Analysis - Data Analyst Portfolio 🌐 LIVE
 
 ## 🎯 **Project Overview**
 This is a **Data Analyst focused** e-commerce sales analysis project that demonstrates end-to-end business intelligence capabilities. The project showcases core data analyst skills: data cleaning, SQL-style aggregations, KPI calculation, trend analysis, and business insights communication.
+
+**🚀 Interactive Dashboard is LIVE and ready for viewing!**
 
 ## 🎓 **Data Analyst Skills Demonstrated**
 - ✅ **Data Cleaning & Validation**: Systematic data quality assessment
